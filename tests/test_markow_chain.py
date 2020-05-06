@@ -1,4 +1,4 @@
-from markow_chain import __version__
+from markov_chain import __version__
 
 
 def test_version():
