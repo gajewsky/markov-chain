@@ -23,15 +23,10 @@ class WordsGenerator:
 
     def __next_word(self, word):
         candidats = self.words[word]
-
-        weights_sum = sum(candidats.values())
-
-        probabilities = list(
-            map(lambda x: x / weights_sum, candidats.values())
-        )
-        next_word = weighted_choice(list(candidats.keys()), 1, p = probabilities)[0]
-        return  next_word
-
+        choices = list(candidats.keys())
+        weighs = list(candidats.values())
+        
+        return weighted_choice(choices, p = weighs)
 
     def __words_generator(self):
         word = self.init_word
