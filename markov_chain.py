@@ -2,12 +2,26 @@ import fire
 from markov_chain.text import Text
 from markov_chain.words_generator import WordsGenerator
 
-LOREM = "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text Lorem since the 1500s, when an Lorem printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing"
+import csv
 
-def words_generator(sentence_length = 10, init_word = None):
-  analyzed_text = Text(LOREM).analyze() 
+def read_dialogs():
+    csv_file = open('data/clean_dialog.csv', 'r')
+    dialogs = csv.reader(csv_file, delimiter=',', quotechar='"')
+    next(dialogs)
+
+    # "title","writer","pony","dialog" for each row
+
+    texts = list()
+    for *_, text in dialogs:
+      texts.append(text)
+      
+    return " ".join(texts)
+
+def sentence_generator(sentence_length = 10, init_word = None):
+  dialogs = read_dialogs()
+  analyzed_text = Text(dialogs).analyze() 
 
   return WordsGenerator(analyzed_text, sentence_length, init_word).call   
 
 if __name__ == '__main__':
-  fire.Fire(words_generator)
+  fire.Fire(sentence_generator)

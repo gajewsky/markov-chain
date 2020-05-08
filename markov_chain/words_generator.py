@@ -17,9 +17,8 @@ class WordsGenerator:
             if cnt >= self.sentence_length or word is None:
                 break
             words.append(word)
-        words[0] = words[0].capitalize()
 
-        return " ".join(words) + "."
+        return " ".join(words)
 
     def __next_word(self, word):
         candidats = self.words[word]
